@@ -576,7 +576,20 @@ if not BOT_TOKEN:
 
 init_db()
 
-telegram_app = Application.builder().token(BOT_TOKEN).post_init(post_init).build()
+# PythonAnywhere's free tier has no direct internet access — outbound
+# requests must go through their proxy, and the library needs to be told
+# about it explicitly (it doesn't happen automatically). PythonAnywhere
+# sets the http_proxy/https_proxy environment variables for you, so we
+# just need to actually use them. On your own laptop these variables
+# won't exist, so this has no effect there.
+proxy_url = os.environ.get("https_proxy") or os.environ.get("http_proxy")
+
+builder = Application.builder().token(BOT_TOKEN).post_init(post_init)
+if proxy_url:
+    logger.info("Using proxy for Telegram API requests: %s", proxy_url)
+    builder = builder.proxy(proxy_url).get_updates_proxy(proxy_url)
+
+telegram_app = builder.build()
 
 conv_handler = ConversationHandler(
     entry_points=[CommandHandler("start", start)],
