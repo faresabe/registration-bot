@@ -1,0 +1,35 @@
+# Secrets — never commit these
+.env
+
+# Database — contains real people's names/phones, and changes constantly
+registrations.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Editor/OS clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db# Secrets — never commit these
+.env
+
+# Database — contains real people's names/phones, and changes constantly
+registrations.db
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Editor/OS clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+ngrok.exe
